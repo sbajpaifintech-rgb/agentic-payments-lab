@@ -47,3 +47,9 @@ out/
 *.key
 credentials.json
 token.json
+
+# Local only (not for the public repo)
+SETUP-CHECKLIST.md
+TONE-AND-VOICE-GUIDE.md
+skills/
+templates/
