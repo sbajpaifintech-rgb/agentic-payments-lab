@@ -1,61 +1,59 @@
 # Agentic Payments Lab
 
-Exploring the intersection of AI agents and payment infrastructure through working code, protocol implementations, and opinionated analysis.
+An AI treasury agent that reasons about cash positioning, FX exposure, and liquidity across entities, then executes payments through protocol-compliant infrastructure.
 
 **By [Shrish Bajpai](https://linkedin.com/in/shrishbajpai)** | 15 years building payment platforms at scale.
 
 ---
 
-## The Agentic Payments Stack
+## The Core Thesis
+
+Payment execution is deterministic: send X to Y via Z. If that were the whole problem, microservices and orchestrators would have solved it years ago (and largely have).
+
+Treasury management is not deterministic. Cash positioning across jurisdictions, FX hedging timing, liquidity forecasting over noisy receivables, funding source selection with tax and covenant constraints: these decisions keep full-time treasurers employed at every multinational. The agent earns its inference cost here, not in the payment plumbing.
+
+This repo builds both layers and draws a clear line between them.
+
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    CONSUMER / USER LAYER                        │
-│   Consumer grants authority → AI Agent acts on their behalf     │
+│                 TREASURY REASONING LAYER (Agent)                │
+│   Cash positioning, FX strategy, liquidity forecasting,         │
+│   funding decisions across multi-jurisdictional entities         │
+│   Built with: Google ADK, LangChain, Claude Agent SDK           │
 └──────────────────────────┬──────────────────────────────────────┘
-                           │
+                           │ decisions
 ┌──────────────────────────▼──────────────────────────────────────┐
-│                    AGENT LAYER                                  │
-│   Built with: Google ADK, Claude Agent SDK, LangChain           │
-│   Connected via: MCP (tools, resources, prompts)                │
-│   Identity: Visa TAP (agent attestation), KYA protocols         │
+│              TRUST & AUTHORIZATION LAYER                         │
+│   Google AP2: Intent/Cart/Payment Mandates                       │
+│   Visa TAP: HTTP Message Signatures, agent attestation           │
+│   Mastercard Verifiable Intent: Cryptographic authorization      │
 └──────────────────────────┬──────────────────────────────────────┘
-                           │
+                           │ authorized instructions
 ┌──────────────────────────▼──────────────────────────────────────┐
-│               TRUST & AUTHORIZATION LAYER                       │
-│   Google AP2: Intent Mandate, Cart Mandate, Payment Mandate     │
-│   Mastercard Verifiable Intent: Cryptographic authorization     │
-│   Visa TAP: HTTP Message Signatures, merchant verification      │
+│            DETERMINISTIC EXECUTION LAYER (MCP Tools)             │
+│   Payment initiation, FX conversion, sanctions screening,        │
+│   corridor routing, status tracking, reconciliation              │
+│   Connected via: MCP (tools, resources, prompts)                 │
 └──────────────────────────┬──────────────────────────────────────┘
-                           │
+                           │ execution
 ┌──────────────────────────▼──────────────────────────────────────┐
-│               COMMERCE ORCHESTRATION LAYER                      │
-│   Google UCP: Discovery → Cart → Checkout → Post-purchase       │
-│   Payment Orchestration: Multi-rail routing, settlement         │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │
-┌──────────────────────────▼──────────────────────────────────────┐
-│                   PAYMENT RAILS LAYER                           │
-│   Cards (Visa/MC), Instant Rails (FedNow/UPI/FPS),             │
-│   SWIFT, Stablecoins (USDC/USDT), Mobile Money                 │
+│                   PAYMENT RAILS LAYER                            │
+│   Cards (Visa/MC), Instant Rails (FedNow/UPI/FPS),              │
+│   SWIFT, Stablecoins (USDC/USDT), Mobile Money                  │
 └─────────────────────────────────────────────────────────────────┘
 ```
-
-## Why This Exists
-
-The agentic payments space went from theoretical to production in the last 6 months. Google launched AP2 and UCP. Visa launched TAP. Mastercard open-sourced Verifiable Intent. MCP is now adopted by every major AI lab. But almost no one is building at the intersection of these protocols with real payment infrastructure experience.
-
-This repo is that intersection, and it's being built in the open, one project at a time.
 
 ## What's Coming
 
 This repo will grow as I work through each layer of the stack:
 
-- **MCP Payments Server**: Payment operations as tools for any AI agent
-- **ADK Payment Orchestrator**: Multi-agent payment orchestration with Google ADK
+- **Treasury Agent**: The core reasoning agent for cash positioning, FX strategy, and funding decisions
+- **MCP Payments Server**: Deterministic payment operations exposed as MCP tools
+- **ADK Treasury Orchestrator**: Multi-agent treasury reasoning with Google ADK
 - **AP2 / TAP / Verifiable Intent**: Reference implementations of agentic payment protocols
-- **Cross-Border Agent**: Intelligent multi-rail routing (SWIFT, stablecoins, mobile money)
-- **Treasury Agent**: Corporate treasury operations as AI agent tools
+- **Cross-Border Routing**: Multi-rail corridor optimization (SWIFT, stablecoins, mobile money)
 - **Protocol Deep-Dives**: PM-level explainers for the full protocol landscape
 - **Payment API Design**: Production-grade specs and design patterns
 
