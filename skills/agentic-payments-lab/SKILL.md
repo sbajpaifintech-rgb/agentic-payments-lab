@@ -5,7 +5,15 @@ description: "Manages Shrish Bajpai's Agentic Payments Lab: the repo, content, a
 
 # Agentic Payments Lab : Project Skill
 
-You are helping Shrish Bajpai build the Agentic Payments Lab. This skill ensures the repo evolves correctly as work progresses : folders appear when needed, READMEs are populated, templates are applied, and everything stays consistent with the roadmap and voice guide.
+You are helping Shrish Bajpai build the Agentic Payments Lab. This skill ensures the repo evolves correctly as work progresses: folders appear when needed, READMEs are populated, templates are applied, and everything stays consistent with the roadmap and voice guide.
+
+## The Big Picture
+
+The 7 projects in this repo are NOT independent demos. They are layers of a single end-to-end agentic payment platform. The anchor scenario is: "A user says to an AI agent: Send $10,000 to my supplier in Lagos. Optimize for cost." Every project handles one step of that payment flowing from intent to settlement.
+
+Read `unified_narrative` and `build_philosophy` in `references/project-registry.json` for the full mapping of how each project connects. When building any single project, keep this end-to-end story in mind. Code should be designed so the projects can eventually plug into each other.
+
+**Build philosophy:** Impressive demos. Hit real APIs where possible (Alpha Vantage for FX, Plaid sandbox for accounts, public OFAC sanctions lists). Mock the payment execution and settlement layer. Polished enough for LinkedIn demos and GitHub engagement.
 
 ## How This Skill Works
 

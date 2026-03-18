@@ -1,5 +1,33 @@
 {
   "repo_root": "agentic-payments-lab",
+
+  "unified_narrative": {
+    "one_liner": "A working demonstration of what it looks like when AI agents handle the full lifecycle of a payment, from intent to settlement, across protocols, rails, and compliance boundaries.",
+    "anchor_scenario": "A user says to an AI agent: 'Send $10,000 to my supplier in Lagos. Optimize for cost.'",
+    "how_projects_connect": {
+      "01-mcp-payments-server": "The connective tissue. Every agent talks to payment tools through MCP. This is the service layer that exposes payment operations (check status, initiate transfer, get FX rates, flag fraud) to any AI agent.",
+      "02-adk-payment-orchestrator": "The brain. Receives the payment intent, breaks it into sub-problems, and delegates to specialist agents (compliance, routing, FX, settlement).",
+      "03-ap2-implementation": "The trust layer. The agent cryptographically proves the user authorized this payment within specific constraints using AP2 mandates. The merchant/recipient verifies the mandate chain.",
+      "04-cross-border-agent": "The domain intelligence for cross-border. Evaluates four rails (SWIFT at $45, USDC at $8, M-Pesa at $5, FedNow where available) and picks the optimal route based on cost, speed, and compliance.",
+      "05-treasury-agent": "The domain intelligence for corporate treasury. Before executing, checks corporate cash position, flags FX exposure, and recommends a hedge.",
+      "06-protocol-deep-dives": "The thought leadership wrapper. Makes the protocol landscape legible to PMs and architects who need to understand AP2, TAP, Verifiable Intent, UCP, and MCP.",
+      "07-payment-api-design": "The engineering rigor. Production-grade API design with idempotency, webhook confirmations, error handling, and reconciliation."
+    }
+  },
+
+  "build_philosophy": {
+    "realism": "impressive_demos",
+    "description": "Working code that hits real APIs where possible (Alpha Vantage for FX, Plaid sandbox for accounts) but with mock payment backends. Polished enough for LinkedIn demos and GitHub engagement.",
+    "real_apis": ["Alpha Vantage (FX rates)", "Plaid sandbox (account data)", "Public sanctions lists (OFAC)"],
+    "mocked": ["Payment execution/settlement", "Bank account balances", "Transaction histories", "Compliance rule engine internals"]
+  },
+
+  "formatting_rules": {
+    "no_em_dashes": true,
+    "no_meta_commentary": true,
+    "voice_guide": "TONE-AND-VOICE-GUIDE.md"
+  },
+
   "projects": [
     {
       "id": "01-mcp-payments-server",
