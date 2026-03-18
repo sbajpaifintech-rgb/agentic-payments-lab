@@ -1,28 +1,23 @@
 # Agentic Payments Lab
 
-When the entity initiating a payment is an AI agent instead of a human clicking buttons, what needs to change in payment infrastructure?
+Payment infrastructure for agent-initiated transactions: MCP tools, multi-agent orchestration, protocol implementations (AP2, TAP, Verifiable Intent), and cross-border routing. Treasury management as the anchor use case.
 
-**By [Shrish Bajpai](https://linkedin.com/in/shrishbajpai)** | 15 years building payment platforms at scale.
+**[Shrish Bajpai](https://linkedin.com/in/shrishbajpai)**
 
 ---
 
-## What I'm Exploring
+## What I'm Building
 
-Payments don't exist for their own sake. They serve use cases. And those use cases are becoming agentic.
+An MCP server that exposes payment operations (transfers, FX rates, sanctions screening) as tools for AI agents. A multi-agent orchestrator using Google ADK to coordinate compliance, routing, and settlement. Reference implementations of AP2, TAP, and Verifiable Intent (the protocols Google, Visa, and Mastercard built for agent-initiated payments). A cross-border routing engine that evaluates SWIFT vs stablecoins vs mobile money vs instant rails for a given corridor. And a treasury agent that ties it all together: reasoning about cash positions across six entities, FX exposure in fifteen currencies, and liquidity forecasts that change daily, then pushing payment instructions into the stack below.
 
-Google launched AP2. Visa launched TAP. Mastercard open-sourced Verifiable Intent. Anthropic's MCP is now adopted by every major AI lab. These aren't science projects. Payment networks are retooling their protocols because the consumer of payment services is shifting from humans to AI agents, and the existing infrastructure wasn't designed for that.
+Treasury is the anchor use case. The decision-making there is genuinely non-deterministic (cash positioning, FX hedging, funding source selection across jurisdictions), which is why full-time treasurers still exist and why it makes a good test of where agents earn their keep.
 
-An agent can't click "Confirm Payment." It needs cryptographic authorization with scoped constraints. An agent doesn't have a session cookie. It needs verifiable identity and attestation. An agent operating across six entities and fifteen currencies doesn't make one payment decision at a time. It reasons over cash positions, FX exposure, and liquidity forecasts, then issues a batch of payment instructions that the infrastructure must execute reliably.
-
-This repo explores what payment infrastructure looks like when agents are the primary consumer. Treasury management is the anchor use case: the decision-making is genuinely non-deterministic (that's why full-time treasurers still exist), which makes it a strong test of where agents add real value. But the core work is the payment stack underneath.
-
-## The Agentic Payments Stack
+## The Stack
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                    USE CASE LAYER (Agent)                        │
 │   Treasury: cash positioning, FX strategy, liquidity forecasting │
-│   The non-deterministic decisions that drive payment needs        │
 │   Built with: Google ADK, LangChain, Claude Agent SDK            │
 └──────────────────────────┬──────────────────────────────────────┘
                            │ payment instructions
@@ -38,7 +33,6 @@ This repo explores what payment infrastructure looks like when agents are the pr
 │   MCP server: payment operations as agent-callable tools         │
 │   Orchestration: multi-rail routing, corridor optimization       │
 │   Compliance: sanctions screening, KYC/KYA, regulatory checks    │
-│   Connected via: MCP (tools, resources, prompts)                 │
 └──────────────────────────┬──────────────────────────────────────┘
                            │ execution
 ┌──────────────────────────▼──────────────────────────────────────┐
@@ -48,17 +42,17 @@ This repo explores what payment infrastructure looks like when agents are the pr
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-## What's Coming
+## Projects
 
-- **MCP Payments Server**: Payment operations exposed as MCP tools for any AI agent
-- **ADK Payment Orchestrator**: Multi-agent payment orchestration with Google ADK
-- **AP2 / TAP / Verifiable Intent**: Reference implementations of agentic payment protocols
-- **Cross-Border Routing**: Multi-rail corridor optimization (SWIFT, stablecoins, mobile money)
-- **Treasury Agent**: The anchor use case, an agent that reasons about cash positioning, FX, and liquidity, then drives payments
+- **MCP Payments Server**: Six payment tools (initiate_transfer, check_status, get_fx_rate, screen_sanctions, categorize_transaction, reconcile_batch) exposed via MCP
+- **ADK Payment Orchestrator**: Google ADK multi-agent system with compliance, routing, FX, and settlement sub-agents
+- **AP2 / TAP / Verifiable Intent**: Reference implementations of all three agentic payment protocols, plus a comparison matrix
+- **Cross-Border Routing**: Corridor optimizer across SWIFT, USDC, M-Pesa, and instant rails (FedNow, UPI, FPS, PIX)
+- **Treasury Agent**: Cash positioning, FX exposure, and liquidity forecasting across entities, driving payments through the infrastructure above
 - **Protocol Deep-Dives**: PM-level explainers for the full protocol landscape
-- **Payment API Design**: Production-grade specs and design patterns
+- **Payment API Design**: OpenAPI specs, error taxonomies, webhook reliability patterns, SDK samples
 
-Each project ships when it's ready, with working code, architecture docs, and companion analysis.
+Each will ship with working code, architecture docs, and companion analysis.
 
 ## Setup
 
@@ -66,7 +60,7 @@ Each project ships when it's ready, with working code, architecture docs, and co
 git clone https://github.com/shrishb/agentic-payments-lab.git
 cd agentic-payments-lab
 cp .env.example .env
-# Fill in your API keys
+# Add your API keys (Alpha Vantage, Plaid sandbox, Anthropic, Google, OpenAI)
 ```
 
 ## License
