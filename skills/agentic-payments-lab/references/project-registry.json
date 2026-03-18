@@ -1,0 +1,180 @@
+{
+  "repo_root": "agentic-payments-lab",
+  "projects": [
+    {
+      "id": "01-mcp-payments-server",
+      "name": "MCP Payments Server",
+      "phase": "Phase 1-2",
+      "description": "A production-quality MCP server that exposes payment operations as tools for AI agents.",
+      "triggers": ["mcp server", "mcp payments", "payment tools", "check_payment_status", "initiate_transfer", "get_fx_rate", "categorize_transaction", "reconcile_batch", "flag_suspicious", "worldpay mcp", "fipto mcp"],
+      "folder_structure": {
+        "src": ["server.py", "__init__.py"],
+        "tools": ["payment_status.py", "initiate_transfer.py", "fx_rates.py", "transaction_categorize.py", "fraud_flag.py", "__init__.py"],
+        "resources": [],
+        "tests": []
+      },
+      "companion_docs": [
+        {"file": "PRODUCT-SPEC.md", "template": "templates/PRD-TEMPLATE.md"}
+      ],
+      "readme_spec": {
+        "title": "MCP Payments Server",
+        "subtitle": "A production-quality MCP server that exposes payment operations as tools for AI agents.",
+        "sections": ["Tools table (name, description, status)", "Resources list", "Architecture diagram (MCP client → server → mock backend)", "Quick Start (pip install, run locally)", "Deployment (Cloud Run)", "Companion docs link"]
+      },
+      "root_readme_entry": {
+        "number": "01",
+        "link_text": "MCP Payments Server",
+        "demonstrates": "Payment operations as MCP tools for any AI agent"
+      }
+    },
+    {
+      "id": "02-adk-payment-orchestrator",
+      "name": "ADK Multi-Agent Payment Orchestrator",
+      "phase": "Phase 1-2",
+      "description": "A Google ADK multi-agent system where a root orchestrator delegates to specialized payment sub-agents.",
+      "triggers": ["adk", "multi-agent", "payment orchestrator", "orchestrator agent", "compliance agent", "routing agent", "fx agent", "settlement agent", "google adk", "agent hierarchy"],
+      "folder_structure": {
+        "agents": ["orchestrator.py", "compliance_agent.py", "routing_agent.py", "fx_agent.py", "__init__.py"],
+        "tools": [],
+        "config": []
+      },
+      "companion_docs": [
+        {"file": "ARCHITECTURE-DOC.md", "template": "templates/ARCHITECTURE-DOC-TEMPLATE.md"}
+      ],
+      "readme_spec": {
+        "title": "ADK Multi-Agent Payment Orchestrator",
+        "subtitle": "A Google ADK multi-agent system where a root orchestrator delegates to specialized payment sub-agents.",
+        "sections": ["Agent hierarchy diagram (orchestrator → 4 sub-agents)", "Why multi-agent for payments (separation of concerns, regulatory isolation, auditability)", "Quick Start (pip install google-adk, adk web)", "Agent status table"]
+      },
+      "root_readme_entry": {
+        "number": "02",
+        "link_text": "ADK Payment Orchestrator",
+        "demonstrates": "Multi-agent payment orchestration with Google ADK"
+      }
+    },
+    {
+      "id": "03-ap2-implementation",
+      "name": "AP2 / TAP / Verifiable Intent Protocol Implementation",
+      "phase": "Phase 2",
+      "description": "Working reference implementations of agentic payment protocols, plus comparative analysis.",
+      "triggers": ["ap2", "agent payments protocol", "visa tap", "trusted agent protocol", "verifiable intent", "mastercard vi", "intent mandate", "cart mandate", "payment mandate", "merchant verifier", "protocol implementation", "protocol comparison"],
+      "folder_structure": {
+        "intent-mandate": [],
+        "cart-mandate": [],
+        "payment-mandate": [],
+        "merchant-verifier": [],
+        "demo": []
+      },
+      "companion_docs": [
+        {"file": "PROTOCOL-ANALYSIS.md", "template": "templates/PROTOCOL-EXPLAINER-TEMPLATE.md"}
+      ],
+      "readme_spec": {
+        "title": "AP2 / TAP / Verifiable Intent: Protocol Implementation",
+        "subtitle": "Working reference implementations of agentic payment protocols, plus a comparative analysis.",
+        "sections": ["Component table (mandate generators, verifier, demo)", "End-to-end AP2 flow diagram (consumer → agent → mandates → merchant → network)", "Companion docs link to PROTOCOL-ANALYSIS.md"]
+      },
+      "root_readme_entry": {
+        "number": "03",
+        "link_text": "AP2 Implementation",
+        "demonstrates": "Reference implementation of agentic payment protocols"
+      }
+    },
+    {
+      "id": "04-cross-border-agent",
+      "name": "Cross-Border Payment Agent",
+      "phase": "Phase 2",
+      "description": "An AI agent that finds the cheapest/fastest way to send money across borders, routing across SWIFT, stablecoins, mobile money, and instant rails.",
+      "triggers": ["cross-border", "remittance", "swift", "stablecoin", "mobile money", "m-pesa", "mtn momo", "fednow", "upi", "fps", "pix", "multi-rail", "corridor", "send money", "nigeria", "sub-saharan", "africa payments"],
+      "folder_structure": {
+        "agent": [],
+        "rails": ["swift.py", "stablecoin.py", "mobile_money.py", "instant_rails.py", "__init__.py"],
+        "routing": [],
+        "compliance": [],
+        "notebooks": []
+      },
+      "companion_docs": [
+        {"file": "STRATEGY-DOC.md", "template": "templates/VISION-DOC-TEMPLATE.md"}
+      ],
+      "readme_spec": {
+        "title": "Cross-Border Payment Agent",
+        "subtitle": "An AI agent that answers: \"What's the cheapest/fastest way to send $10K from the US to Nigeria?\"",
+        "sections": ["Multi-rail architecture diagram (agent evaluating SWIFT vs stablecoin vs mobile money vs instant rails with costs)", "Components table", "The unfair advantage (Amazon Sub-Saharan Africa experience)", "Companion docs link"]
+      },
+      "root_readme_entry": {
+        "number": "04",
+        "link_text": "Cross-Border Agent",
+        "demonstrates": "Intelligent multi-rail routing (SWIFT, stablecoins, mobile money)"
+      }
+    },
+    {
+      "id": "05-treasury-agent",
+      "name": "Treasury Agent",
+      "phase": "Phase 2",
+      "description": "Treasury operations as AI agent tools, built with LangChain, OpenAI Functions, and MCP.",
+      "triggers": ["treasury", "tts", "citi tts", "cash position", "fx exposure", "liquidity forecast", "hedge", "corporate treasury", "treasury report", "langchain tools", "openai functions"],
+      "folder_structure": {
+        "langchain-tools": [],
+        "openai-functions": [],
+        "mcp-server": [],
+        "notebooks": []
+      },
+      "companion_docs": [
+        {"file": "VISION-DOC.md", "template": "templates/VISION-DOC-TEMPLATE.md"}
+      ],
+      "readme_spec": {
+        "title": "Treasury Agent",
+        "subtitle": "Treasury operations exposed as AI agent tools, built with LangChain, OpenAI Functions, and MCP.",
+        "sections": ["Tools table (get_cash_position, optimize_fx_exposure, forecast_liquidity, etc.)", "Three implementations section (LangChain, OpenAI Functions, MCP)", "Demo notebook description", "Companion docs link"]
+      },
+      "root_readme_entry": {
+        "number": "05",
+        "link_text": "Treasury Agent",
+        "demonstrates": "Corporate treasury operations as AI agent tools"
+      }
+    },
+    {
+      "id": "06-protocol-deep-dives",
+      "name": "Protocol Deep-Dives",
+      "phase": "Phase 2-3",
+      "description": "PM-level explainers for every major agentic payment protocol.",
+      "triggers": ["protocol explainer", "deep-dive", "protocol deep dive", "ap2 explainer", "tap explainer", "verifiable intent explainer", "ucp explainer", "mcp for payments", "protocol comparison matrix", "pm guide"],
+      "folder_structure": {},
+      "files_at_root": ["ap2-explainer.md", "visa-tap-explainer.md", "mastercard-vi-explainer.md", "ucp-explainer.md", "mcp-for-payments.md", "protocol-comparison-matrix.md"],
+      "companion_docs": [],
+      "readme_spec": {
+        "title": "Protocol Deep-Dives",
+        "subtitle": "PM-level explainers for every major agentic payment protocol.",
+        "sections": ["Explainer table (document, protocol, status)", "Who these are for (PMs, architects, engineers, leadership)"]
+      },
+      "root_readme_entry": {
+        "number": "06",
+        "link_text": "Protocol Deep-Dives",
+        "demonstrates": "PM-level explainers for AP2, TAP, Verifiable Intent, UCP, MCP"
+      }
+    },
+    {
+      "id": "07-payment-api-design",
+      "name": "Payment API Design",
+      "phase": "Phase 2-3",
+      "description": "Production-grade payment orchestration API design. OpenAPI specs, ADRs, error taxonomies, and SDK samples.",
+      "triggers": ["payment api", "openapi", "api design", "error taxonomy", "webhook reliability", "sdk examples", "idempotency", "api spec", "design decisions", "adr"],
+      "folder_structure": {
+        "sdk-examples": []
+      },
+      "files_at_root": ["openapi-spec.yaml", "error-taxonomy.md", "webhook-reliability.md"],
+      "companion_docs": [
+        {"file": "DESIGN-DECISIONS.md", "template": "templates/ARCHITECTURE-DOC-TEMPLATE.md"}
+      ],
+      "readme_spec": {
+        "title": "Payment API Design",
+        "subtitle": "Production-grade payment orchestration API design. OpenAPI specs, architecture decision records, error taxonomies, and SDK samples.",
+        "sections": ["Contents table (document, description, status)", "Why this exists (payment-grade vs toy demos)"]
+      },
+      "root_readme_entry": {
+        "number": "07",
+        "link_text": "Payment API Design",
+        "demonstrates": "Production-grade payment API specs and design patterns"
+      }
+    }
+  ]
+}
