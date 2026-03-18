@@ -9,17 +9,17 @@ You are helping Shrish Bajpai build the Agentic Payments Lab. This skill ensures
 
 ## The Big Picture
 
-The 7 projects in this repo are layers of a single platform built around one core insight: **treasury management is genuinely non-deterministic** (if it were deterministic, it would have been automated decades ago). Full-time treasurers exist because cash positioning, FX hedging, liquidity forecasting, and funding decisions require judgment over noisy, probabilistic data across multiple entities and jurisdictions.
+The 7 projects in this repo explore one question: **what does payment infrastructure look like when AI agents are the primary consumer?**
 
-The agent lives in the treasury reasoning layer. Payments are the deterministic last mile.
+Payments don't exist for their own sake. They serve use cases. Those use cases are becoming agentic. Google built AP2, Visa built TAP, Mastercard built Verifiable Intent, and Anthropic's MCP is now adopted by every major AI lab. These protocols exist because payment networks recognize that the entity initiating payments is shifting from humans to agents, and the existing stack wasn't designed for that.
 
-The anchor scenario: A corporate treasurer's AI agent wakes up to GBP receivables arriving next week (probabilistic), SGD payroll due Friday (fixed), a supplier in Lagos waiting on $10K (flexible timing), and cash scattered across entities in Singapore, London, and Delaware. The agent reasons about which entity funds which obligation, whether to hedge, which corridor minimizes cost, and whether to draw on the revolver or liquidate a short-term investment.
+Projects 01-04 and 06-07 are the payment infrastructure: MCP tools, multi-agent orchestration, protocol implementations, cross-border routing, explainers, and API design. Project 05 (Treasury Agent) is the anchor use case that exercises the full stack. Treasury was chosen because the decision-making layer is genuinely non-deterministic (cash positioning, FX hedging, liquidity forecasting across entities), which creates a strong test of where agents add real value above the payment layer.
 
-Project 05 (Treasury Agent) is the brain. All other projects serve it: MCP server provides deterministic execution tools, ADK orchestrator structures the multi-agent reasoning, AP2/TAP provide authorization, cross-border routing optimizes corridor selection, protocol deep-dives provide thought leadership, and API design ensures payment-grade infrastructure.
+The anchor scenario: A corporate treasurer's AI agent wakes up to GBP receivables arriving next week (probabilistic), SGD payroll due Friday (fixed), a supplier in Lagos waiting on $10K (flexible timing), and cash scattered across entities in Singapore, London, and Delaware. The treasury agent reasons about the decisions. The payment infrastructure underneath executes them.
 
 Read `unified_narrative` and `build_philosophy` in `references/project-registry.json` for the full mapping.
 
-**Build philosophy:** Impressive demos. Every demo shows both paths: the deterministic happy path (fast, cheap, boring) AND the exception path where the agent actually reasons (FX decision, funding source selection, entity optimization). Hit real APIs where possible (Alpha Vantage for FX, Plaid sandbox for accounts, public OFAC sanctions lists). Mock treasury data (multi-entity positions, cash flow forecasts) and payment execution.
+**Build philosophy:** Impressive demos. The payment infrastructure projects should feel production-grade. The treasury use case should show both the deterministic path (payment execution) and the non-deterministic path (treasury reasoning) to make clear where agents add value. Hit real APIs where possible (Alpha Vantage for FX, Plaid sandbox for accounts, public OFAC sanctions lists). Mock payment execution and treasury data (multi-entity positions, cash flow forecasts).
 
 ## How This Skill Works
 

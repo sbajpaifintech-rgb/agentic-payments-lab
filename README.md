@@ -1,40 +1,43 @@
 # Agentic Payments Lab
 
-An AI treasury agent that reasons about cash positioning, FX exposure, and liquidity across entities, then executes payments through protocol-compliant infrastructure.
+When the entity initiating a payment is an AI agent instead of a human clicking buttons, what needs to change in payment infrastructure?
 
 **By [Shrish Bajpai](https://linkedin.com/in/shrishbajpai)** | 15 years building payment platforms at scale.
 
 ---
 
-## The Core Thesis
+## What I'm Exploring
 
-Payment execution is deterministic: send X to Y via Z. If that were the whole problem, microservices and orchestrators would have solved it years ago (and largely have).
+Payments don't exist for their own sake. They serve use cases. And those use cases are becoming agentic.
 
-Treasury management is not deterministic. Cash positioning across jurisdictions, FX hedging timing, liquidity forecasting over noisy receivables, funding source selection with tax and covenant constraints: these decisions keep full-time treasurers employed at every multinational. The agent earns its inference cost here, not in the payment plumbing.
+Google launched AP2. Visa launched TAP. Mastercard open-sourced Verifiable Intent. Anthropic's MCP is now adopted by every major AI lab. These aren't science projects. Payment networks are retooling their protocols because the consumer of payment services is shifting from humans to AI agents, and the existing infrastructure wasn't designed for that.
 
-This repo builds both layers and draws a clear line between them.
+An agent can't click "Confirm Payment." It needs cryptographic authorization with scoped constraints. An agent doesn't have a session cookie. It needs verifiable identity and attestation. An agent operating across six entities and fifteen currencies doesn't make one payment decision at a time. It reasons over cash positions, FX exposure, and liquidity forecasts, then issues a batch of payment instructions that the infrastructure must execute reliably.
 
-## Architecture
+This repo explores what payment infrastructure looks like when agents are the primary consumer. Treasury management is the anchor use case: the decision-making is genuinely non-deterministic (that's why full-time treasurers still exist), which makes it a strong test of where agents add real value. But the core work is the payment stack underneath.
+
+## The Agentic Payments Stack
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                 TREASURY REASONING LAYER (Agent)                │
-│   Cash positioning, FX strategy, liquidity forecasting,         │
-│   funding decisions across multi-jurisdictional entities         │
-│   Built with: Google ADK, LangChain, Claude Agent SDK           │
+│                    USE CASE LAYER (Agent)                        │
+│   Treasury: cash positioning, FX strategy, liquidity forecasting │
+│   The non-deterministic decisions that drive payment needs        │
+│   Built with: Google ADK, LangChain, Claude Agent SDK            │
 └──────────────────────────┬──────────────────────────────────────┘
-                           │ decisions
+                           │ payment instructions
 ┌──────────────────────────▼──────────────────────────────────────┐
-│              TRUST & AUTHORIZATION LAYER                         │
-│   Google AP2: Intent/Cart/Payment Mandates                       │
-│   Visa TAP: HTTP Message Signatures, agent attestation           │
+│               TRUST & AUTHORIZATION LAYER                        │
+│   Google AP2: Intent Mandate, Cart Mandate, Payment Mandate      │
 │   Mastercard Verifiable Intent: Cryptographic authorization      │
+│   Visa TAP: HTTP Message Signatures, agent attestation           │
 └──────────────────────────┬──────────────────────────────────────┘
                            │ authorized instructions
 ┌──────────────────────────▼──────────────────────────────────────┐
-│            DETERMINISTIC EXECUTION LAYER (MCP Tools)             │
-│   Payment initiation, FX conversion, sanctions screening,        │
-│   corridor routing, status tracking, reconciliation              │
+│               PAYMENT INFRASTRUCTURE LAYER                       │
+│   MCP server: payment operations as agent-callable tools         │
+│   Orchestration: multi-rail routing, corridor optimization       │
+│   Compliance: sanctions screening, KYC/KYA, regulatory checks    │
 │   Connected via: MCP (tools, resources, prompts)                 │
 └──────────────────────────┬──────────────────────────────────────┘
                            │ execution
@@ -47,13 +50,11 @@ This repo builds both layers and draws a clear line between them.
 
 ## What's Coming
 
-This repo will grow as I work through each layer of the stack:
-
-- **Treasury Agent**: The core reasoning agent for cash positioning, FX strategy, and funding decisions
-- **MCP Payments Server**: Deterministic payment operations exposed as MCP tools
-- **ADK Treasury Orchestrator**: Multi-agent treasury reasoning with Google ADK
+- **MCP Payments Server**: Payment operations exposed as MCP tools for any AI agent
+- **ADK Payment Orchestrator**: Multi-agent payment orchestration with Google ADK
 - **AP2 / TAP / Verifiable Intent**: Reference implementations of agentic payment protocols
 - **Cross-Border Routing**: Multi-rail corridor optimization (SWIFT, stablecoins, mobile money)
+- **Treasury Agent**: The anchor use case, an agent that reasons about cash positioning, FX, and liquidity, then drives payments
 - **Protocol Deep-Dives**: PM-level explainers for the full protocol landscape
 - **Payment API Design**: Production-grade specs and design patterns
 

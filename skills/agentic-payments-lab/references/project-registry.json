@@ -2,24 +2,24 @@
   "repo_root": "agentic-payments-lab",
 
   "unified_narrative": {
-    "one_liner": "A working demonstration of an AI treasury agent that reasons about cash positioning, FX exposure, liquidity forecasting, and funding decisions across entities, then executes payments deterministically through protocol-compliant infrastructure.",
-    "core_thesis": "Treasury management is genuinely non-deterministic: if it were deterministic, it would have been automated decades ago. Full-time treasurers exist because cash positioning, FX hedging, liquidity forecasting, and funding decisions require judgment over noisy, probabilistic data across multiple entities and jurisdictions. The agent lives in the treasury reasoning layer. Payments are the deterministic last mile.",
-    "anchor_scenario": "A corporate treasurer's AI agent wakes up to: GBP receivables arriving next week (probabilistic), SGD payroll due Friday (fixed), a supplier in Lagos waiting on $10K (flexible timing), and cash scattered across entities in Singapore, London, and Delaware. The agent reasons about which entity should fund which obligation, whether to hedge the GBP/USD exposure or wait, which corridor and rail minimizes total cost for the Lagos payment, and whether to draw on the revolver or liquidate a short-term investment to cover the SGD shortfall.",
-    "why_agents_not_microservices": "The payment execution (send X to Y via Z) is deterministic and belongs in microservices. The treasury decision (what to fund, from where, when, how to manage FX exposure, which funding source) is non-deterministic because it depends on probabilistic cash flow forecasts, moving FX rates, competing entity needs, tax implications of intercompany flows, and policy constraints that interact in ways that resist static rules engines.",
+    "one_liner": "Exploring what payment infrastructure looks like when AI agents are the primary consumer, using corporate treasury as the anchor use case.",
+    "core_thesis": "Payments don't exist for their own sake. They serve use cases. Those use cases are becoming agentic. Google, Visa, and Mastercard are building agentic payment protocols because the consumer of payment services is shifting from humans to AI agents, and existing infrastructure wasn't designed for that. This repo explores what needs to change in the payment stack. Treasury management is the anchor use case because the decision-making layer is genuinely non-deterministic (cash positioning, FX hedging, liquidity forecasting across entities and jurisdictions), which creates a strong test of where agents add real value above the payment layer.",
+    "anchor_scenario": "A corporate treasurer's AI agent wakes up to: GBP receivables arriving next week (probabilistic), SGD payroll due Friday (fixed), a supplier in Lagos waiting on $10K (flexible timing), and cash scattered across entities in Singapore, London, and Delaware. The agent reasons about which entity should fund which obligation, whether to hedge the GBP/USD exposure or wait, which corridor and rail minimizes total cost for the Lagos payment, and whether to draw on the revolver or liquidate a short-term investment to cover the SGD shortfall. Then the payment infrastructure underneath executes those decisions reliably.",
+    "why_this_matters_for_payments": "An agent can't click 'Confirm Payment.' It needs cryptographic authorization with scoped constraints (AP2 mandates). An agent doesn't have a session cookie. It needs verifiable identity and attestation (Visa TAP). An agent operating across entities doesn't make one payment at a time. It issues batches of instructions that the infrastructure must execute reliably, with idempotency, reconciliation, and multi-rail routing. The payment stack needs to be rebuilt for this consumer.",
     "how_projects_connect": {
-      "05-treasury-agent": "The brain. The central agent that reasons about cash positioning across entities, FX exposure management, liquidity forecasting, and funding decisions. This is where the non-determinism lives and where an agent genuinely earns its inference cost. All other projects serve this agent.",
-      "01-mcp-payments-server": "The deterministic execution layer. Exposes payment operations (initiate transfer, check status, get FX rates, sanctions screening) as MCP tools that the treasury agent calls after making its decisions. Proves that the payment itself is infrastructure, not intelligence.",
-      "02-adk-treasury-orchestrator": "The multi-agent reasoning layer. A Google ADK system where the treasury agent delegates to specialist sub-agents: a cash positioning agent, an FX strategy agent, a compliance agent, and a funding agent. Each sub-agent handles one dimension of the treasury decision.",
-      "03-ap2-implementation": "The trust layer. When the treasury agent decides to execute a payment, AP2/TAP/Verifiable Intent ensure the agent has cryptographic proof of authorization within specific constraints (amount limits, approved corridors, approved counterparties).",
-      "04-cross-border-routing": "A capability within the treasury agent's toolkit. Once the agent decides which entity funds the Lagos payment, this module evaluates corridors and rails (SWIFT, stablecoins, mobile money, instant rails) to minimize cost for that specific leg. The rail selection has probabilistic elements (real-time FX spreads, fee variability across networks) but is narrower than the full treasury decision.",
-      "06-protocol-deep-dives": "The thought leadership layer. Makes the protocol landscape legible to PMs and architects. Now framed around how each protocol serves treasury automation, not just payment routing.",
-      "07-payment-api-design": "The engineering rigor. Production-grade API design for the deterministic layer: idempotency, webhook confirmations, error handling, reconciliation. Shows that the infrastructure beneath the agent is built to payment-grade standards."
+      "01-mcp-payments-server": "The foundation. Payment operations (initiate transfer, check status, get FX rates, sanctions screening) exposed as MCP tools that any AI agent can call. This is what 'payment infrastructure for agents' looks like at the tool level.",
+      "02-adk-payment-orchestrator": "The orchestration layer. A Google ADK multi-agent system that coordinates payment workflows: compliance checks, routing decisions, FX conversion, settlement tracking. Shows how agent-native orchestration differs from traditional payment orchestration.",
+      "03-ap2-implementation": "The trust layer. Working implementations of AP2, TAP, and Verifiable Intent. When an agent initiates a payment, these protocols provide cryptographic proof of authorization within scoped constraints. This is the new authentication model for agent-initiated payments.",
+      "04-cross-border-routing": "The routing intelligence. Evaluates corridors and rails (SWIFT, stablecoins, mobile money, instant rails) based on real-time FX spreads, fees, and settlement speeds. Shows how multi-rail routing works when the decision-maker is an agent with access to live market data.",
+      "05-treasury-agent": "The anchor use case. A treasury agent that reasons about cash positioning, FX exposure, and liquidity across entities, then drives payment instructions into the infrastructure below. Demonstrates why the payment stack needs to change: because the use cases consuming it are becoming agentic, and treasury is a strong example of genuinely non-deterministic decision-making.",
+      "06-protocol-deep-dives": "The thought leadership layer. PM-level explainers for every major agentic payment protocol: what each protocol does, how it works, where it's mature, and how it fits into the stack.",
+      "07-payment-api-design": "The engineering rigor. Production-grade API design with idempotency, webhook confirmations, error handling, and reconciliation. Shows that the payment infrastructure beneath the agent is built to payment-grade standards, not demo-grade."
     }
   },
 
   "build_philosophy": {
     "realism": "impressive_demos",
-    "description": "Working code that hits real APIs where possible (Alpha Vantage for FX, Plaid sandbox for accounts) but with mock payment backends and mock treasury data (multi-entity cash positions, forecasts). Polished enough for LinkedIn demos and GitHub engagement. Every demo shows both paths: the deterministic happy path (fast, cheap, boring) and the exception path where the agent actually reasons (FX decision, funding source selection, entity optimization).",
+    "description": "Working code that hits real APIs where possible (Alpha Vantage for FX, Plaid sandbox for accounts) but with mock payment backends and mock treasury data (multi-entity cash positions, forecasts). Polished enough for LinkedIn demos and GitHub engagement. The payment infrastructure projects should feel production-grade. The treasury use case should show both the deterministic path (payment execution) and the non-deterministic path (treasury reasoning) to make clear where agents add value.",
     "real_apis": ["Alpha Vantage (FX rates)", "Plaid sandbox (account data)", "Public sanctions lists (OFAC)"],
     "mocked": ["Payment execution/settlement", "Multi-entity cash positions", "Cash flow forecasts (receivables/payables)", "Bank account balances across entities", "Intercompany loan terms", "Hedge portfolio state", "Compliance rule engine internals"]
   },
@@ -58,13 +58,13 @@
       }
     },
     {
-      "id": "02-adk-treasury-orchestrator",
-      "name": "ADK Multi-Agent Treasury Orchestrator",
+      "id": "02-adk-payment-orchestrator",
+      "name": "ADK Multi-Agent Payment Orchestrator",
       "phase": "Phase 1-2",
-      "description": "A Google ADK multi-agent system where a treasury orchestrator delegates to specialist sub-agents: cash positioning, FX strategy, compliance, and funding. The orchestrator reasons about the full treasury picture before triggering any payment execution.",
-      "triggers": ["adk", "multi-agent", "treasury orchestrator", "orchestrator agent", "compliance agent", "cash positioning agent", "fx strategy agent", "funding agent", "google adk", "agent hierarchy"],
+      "description": "A Google ADK multi-agent system where a root orchestrator delegates to specialized payment sub-agents (compliance, routing, FX, settlement). Demonstrates how agent-native orchestration differs from traditional payment orchestration: the agents can reason about trade-offs, handle exceptions, and coordinate across sub-problems rather than following a fixed workflow.",
+      "triggers": ["adk", "multi-agent", "payment orchestrator", "orchestrator agent", "compliance agent", "routing agent", "fx agent", "settlement agent", "google adk", "agent hierarchy"],
       "folder_structure": {
-        "agents": ["orchestrator.py", "cash_positioning_agent.py", "fx_strategy_agent.py", "compliance_agent.py", "funding_agent.py", "__init__.py"],
+        "agents": ["orchestrator.py", "compliance_agent.py", "routing_agent.py", "fx_agent.py", "settlement_agent.py", "__init__.py"],
         "tools": [],
         "config": []
       },
@@ -72,14 +72,14 @@
         {"file": "ARCHITECTURE-DOC.md", "template": "templates/ARCHITECTURE-DOC-TEMPLATE.md"}
       ],
       "readme_spec": {
-        "title": "ADK Multi-Agent Treasury Orchestrator",
-        "subtitle": "A Google ADK multi-agent system where a treasury orchestrator delegates to specialist sub-agents for cash positioning, FX strategy, compliance, and funding decisions.",
-        "sections": ["Agent hierarchy diagram (treasury orchestrator → 4 sub-agents)", "Why multi-agent for treasury (each sub-agent handles one dimension of a genuinely non-deterministic decision)", "The deterministic boundary (where agent reasoning stops and payment execution begins)", "Quick Start (pip install google-adk, adk web)", "Agent status table"]
+        "title": "ADK Multi-Agent Payment Orchestrator",
+        "subtitle": "A Google ADK multi-agent system that coordinates payment workflows through specialized sub-agents.",
+        "sections": ["Agent hierarchy diagram (orchestrator → sub-agents)", "How this differs from traditional payment orchestration", "Quick Start (pip install google-adk, adk web)", "Agent status table"]
       },
       "root_readme_entry": {
         "number": "02",
-        "link_text": "ADK Treasury Orchestrator",
-        "demonstrates": "Multi-agent treasury reasoning with Google ADK"
+        "link_text": "ADK Payment Orchestrator",
+        "demonstrates": "Multi-agent payment orchestration with Google ADK"
       }
     },
     {
@@ -113,7 +113,7 @@
       "id": "04-cross-border-routing",
       "name": "Cross-Border Routing Engine",
       "phase": "Phase 2",
-      "description": "A corridor and rail optimization module that the treasury agent calls after deciding which entity funds a cross-border obligation. Evaluates real-time FX spreads, fee structures, and settlement speeds across SWIFT, stablecoins, mobile money, and instant rails. The rail selection has probabilistic elements (FX spread volatility, fee variability across networks, settlement time variance) but is narrower than the full treasury decision. This is a tool the treasury agent uses, not a standalone agent.",
+      "description": "Multi-rail corridor optimization for cross-border payments. Evaluates real-time FX spreads, fee structures, and settlement speeds across SWIFT, stablecoins, mobile money, and instant rails. When an agent (treasury or otherwise) needs to move money across borders, this is the infrastructure that evaluates the options. Shows how routing intelligence works when the caller has access to live market data and can reason about trade-offs.",
       "triggers": ["cross-border", "remittance", "swift", "stablecoin", "mobile money", "m-pesa", "mtn momo", "fednow", "upi", "fps", "pix", "multi-rail", "corridor", "send money", "nigeria", "sub-saharan", "africa payments", "rail selection", "corridor optimization"],
       "folder_structure": {
         "rails": ["swift.py", "stablecoin.py", "mobile_money.py", "instant_rails.py", "__init__.py"],
@@ -126,8 +126,8 @@
       ],
       "readme_spec": {
         "title": "Cross-Border Routing Engine",
-        "subtitle": "Corridor and rail optimization for cross-border payments. Called by the treasury agent after entity and funding decisions are made.",
-        "sections": ["Where this fits (treasury agent → funding decision → this module → payment execution)", "Multi-rail architecture diagram", "Probabilistic elements (FX spread volatility, fee variability, settlement time variance)", "Deterministic elements (sanctions screening, corridor availability)", "Components table", "Companion docs link"]
+        "subtitle": "Multi-rail corridor optimization for agent-initiated cross-border payments.",
+        "sections": ["Multi-rail architecture diagram", "How an agent uses this (request best route for a corridor, get ranked options with costs/speeds)", "Rails covered (SWIFT, stablecoins, mobile money, instant rails)", "Components table", "Companion docs link"]
       },
       "root_readme_entry": {
         "number": "04",
@@ -137,9 +137,9 @@
     },
     {
       "id": "05-treasury-agent",
-      "name": "Treasury Agent (Core)",
-      "phase": "Phase 1-2",
-      "description": "The central agent in the platform. Reasons about cash positioning across multi-jurisdictional entities, FX exposure management, liquidity forecasting over noisy receivables/payables data, and funding source selection (revolver draw, CP issuance, intercompany loan, investment liquidation). This is where the non-determinism lives: the decisions that keep full-time treasurers employed. Built with LangChain, OpenAI Functions, and MCP. Payments are downstream deterministic execution.",
+      "name": "Treasury Agent (Anchor Use Case)",
+      "phase": "Phase 2",
+      "description": "The anchor use case that exercises the full payment stack. A treasury agent that reasons about cash positioning across multi-jurisdictional entities, FX exposure management, liquidity forecasting, and funding source selection, then drives payment instructions into the infrastructure built in Projects 01-04. Treasury is a strong use case because the decision-making is genuinely non-deterministic (that's why full-time treasurers exist), which demonstrates why payment infrastructure needs to support agent consumers. Built with LangChain, OpenAI Functions, and MCP.",
       "triggers": ["treasury", "tts", "citi tts", "cash position", "fx exposure", "liquidity forecast", "hedge", "corporate treasury", "treasury report", "langchain tools", "openai functions", "cash positioning", "funding decision", "intercompany", "multi-entity", "13-week forecast", "receivables", "payables"],
       "folder_structure": {
         "agent": ["treasury_agent.py", "__init__.py"],
@@ -153,13 +153,13 @@
       ],
       "readme_spec": {
         "title": "Treasury Agent",
-        "subtitle": "The core reasoning agent. Handles the genuinely non-deterministic decisions in corporate treasury: cash positioning, FX strategy, liquidity forecasting, and funding optimization across entities.",
-        "sections": ["Why treasury is non-deterministic (the case for agents)", "Tools table (get_cash_position, evaluate_fx_exposure, forecast_liquidity, optimize_funding, manage_entities)", "The deterministic boundary diagram (agent reasoning → decision → payment execution)", "Sample scenario walkthrough", "Three implementations (LangChain, OpenAI Functions, MCP)", "Demo notebook description", "Companion docs link"]
+        "subtitle": "The anchor use case. A treasury agent that reasons about cash positioning, FX, and liquidity, then drives the payment infrastructure built in Projects 01-04.",
+        "sections": ["Why treasury as the anchor use case", "Tools table (get_cash_position, evaluate_fx_exposure, forecast_liquidity, optimize_funding, manage_entities)", "How it uses the payment stack (MCP tools, routing engine, protocol authorization)", "Sample scenario walkthrough", "Three implementations (LangChain, OpenAI Functions, MCP)", "Demo notebook description", "Companion docs link"]
       },
       "root_readme_entry": {
         "number": "05",
         "link_text": "Treasury Agent",
-        "demonstrates": "The core reasoning agent for non-deterministic treasury decisions"
+        "demonstrates": "Anchor use case: treasury reasoning driving agentic payment infrastructure"
       }
     },
     {
